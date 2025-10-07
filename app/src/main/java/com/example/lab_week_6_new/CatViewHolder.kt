@@ -5,17 +5,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_week_6_new.ImageLoader
+import com.example.lab_week_6_new.R
 import com.example.lab_week_6_new.model.CatBreed
 import com.example.lab_week_6_new.model.CatModel
 import com.example.lab_week_6_new.model.Gender
-import com.example.lab_week_6_new.R
 
 private val FEMALE_SYMBOL = "\u2640"
 private val MALE_SYMBOL = "\u2642"
 private const val UNKNOWN_SYMBOL = "?"
 
-class CatViewHolder(containerView: View, private val imageLoader: ImageLoader) :
-    RecyclerView.ViewHolder(containerView) {
+class CatViewHolder(
+    private val containerView: View,
+    private val imageLoader: ImageLoader,
+    private val onClickListener: CatAdapter.OnClickListener
+) : RecyclerView.ViewHolder(containerView) {
 
     private val catBiographyView: TextView by lazy { containerView.findViewById<TextView>(R.id.cat_biography) }
     private val catBreedView: TextView by lazy { containerView.findViewById<TextView>(R.id.cat_breed) }
@@ -24,6 +27,11 @@ class CatViewHolder(containerView: View, private val imageLoader: ImageLoader) :
     private val catPhotoView: ImageView by lazy { containerView.findViewById<ImageView>(R.id.cat_photo) }
 
     fun bindData(cat: CatModel) {
+        // set click listener ke container view — delegasikan event ke adapter via onClickListener
+        containerView.setOnClickListener {
+            onClickListener.onItemClick(cat)
+        }
+
         imageLoader.loadImage(cat.imageUrl, catPhotoView)
         catNameView.text = cat.name
         catBreedView.text = when (cat.breed) {

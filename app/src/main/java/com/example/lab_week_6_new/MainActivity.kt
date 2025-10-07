@@ -1,31 +1,34 @@
 package com.example.lab_week_6_new
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_week_6_new.adapter.CatAdapter
-import com.example.lab_week_6_new.model.CatModel
 import com.example.lab_week_6_new.model.CatBreed
+import com.example.lab_week_6_new.model.CatModel
 import com.example.lab_week_6_new.model.Gender
 
 class MainActivity : AppCompatActivity() {
 
-    private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
+    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
 
     private val catAdapter by lazy {
-        CatAdapter(layoutInflater, GlideImageLoader(this))
+        CatAdapter(layoutInflater, GlideImageLoader(this), object : CatAdapter.OnClickListener {
+            override fun onItemClick(cat: CatModel) {
+                showSelectionDialog(cat)
+            }
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Setup adapter & layout manager
         recyclerView.adapter = catAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        // Add sample data
         catAdapter.setData(
             listOf(
                 CatModel(
@@ -51,5 +54,13 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         )
+    }
+
+    private fun showSelectionDialog(cat: CatModel) {
+        AlertDialog.Builder(this)
+            .setTitle("Cat Selected")
+            .setMessage("You have selected cat ${cat.name}")
+            .setPositiveButton("OK") { _, _ -> }
+            .show()
     }
 }
