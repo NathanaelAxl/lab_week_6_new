@@ -1,33 +1,35 @@
 package com.example.lab_week_6_new.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_week_6_new.ImageLoader
 import com.example.lab_week_6_new.R
+import com.example.lab_week_6_new.model.CatBreed
 import com.example.lab_week_6_new.model.CatModel
+import com.example.lab_week_6_new.model.Gender
+import android.widget.ImageView
+import android.widget.TextView
 
 class CatAdapter(
     private val layoutInflater: LayoutInflater,
     private val imageLoader: ImageLoader,
     private val onClickListener: OnClickListener
-) : RecyclerView.Adapter<CatViewHolder>() {
+) : RecyclerView.Adapter<CatAdapter.CatViewHolder>() {
 
-    // 4) Delete Callback Instantiation (exposed so Activity bisa attach)
-    val swipeToDeleteCallback = SwipeToDeleteCallback()
-
-    // Mutable list for storing all the list data
+    // 1️⃣ Data list
     private val cats = mutableListOf<CatModel>()
 
-    // 2) setData
+    // 2️⃣ Fungsi setData untuk mengisi list baru
     fun setData(newCats: List<CatModel>) {
         cats.clear()
         cats.addAll(newCats)
         notifyDataSetChanged()
     }
 
-    // 1) removeItem function
+    // 3️⃣ Fungsi hapus item
     fun removeItem(position: Int) {
         if (position in 0 until cats.size) {
             cats.removeAt(position)
@@ -35,31 +37,75 @@ class CatAdapter(
         }
     }
 
-    // 3) Inner class for swipe-to-delete
+    // 4️⃣ Swipe-to-delete callback (dipakai di MainActivity)
+    val swipeToDeleteCallback = SwipeToDeleteCallback()
+
+    // 5️⃣ ViewHolder untuk menampilkan setiap item kucing
+    inner class CatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val catNameView: TextView = itemView.findViewById(R.id.cat_name)
+        private val catBreedView: TextView = itemView.findViewById(R.id.cat_breed)
+        private val catBiographyView: TextView = itemView.findViewById(R.id.cat_biography)
+        private val catGenderView: TextView = itemView.findViewById(R.id.cat_gender)
+        private val catPhotoView: ImageView = itemView.findViewById(R.id.cat_photo)
+
+        fun bindData(cat: CatModel) {
+            // Load image pakai Glide
+            imageLoader.loadImage(cat.imageUrl, catPhotoView)
+
+            // Text binding
+            catNameView.text = cat.name
+            catBreedView.text = when (cat.breed) {
+                CatBreed.AmericanCurl -> "American Curl"
+                CatBreed.BalineseJavanese -> "Balinese-Javanese"
+                CatBreed.ExoticShorthair -> "Exotic Shorthair"
+                CatBreed.MaineCoon -> "Maine Coon"
+                CatBreed.Bengal -> "Bengal"
+                CatBreed.Sphynx -> "Sphynx"
+                CatBreed.Siamese -> "Siamese"
+                CatBreed.Abyssinian -> "Abyssinian"
+                CatBreed.Persian -> "Persian"
+                CatBreed.Ragdoll -> "Ragdoll"
+                CatBreed.ScottishFold -> "Scottish Fold"
+                CatBreed.Birman -> "Birman"
+                CatBreed.Oriental -> "Oriental"
+            }
+
+            catBiographyView.text = cat.biography
+
+            // Gender symbol
+            catGenderView.text = when (cat.gender) {
+                Gender.Male -> "\u2642"    // ♂
+                Gender.Female -> "\u2640"  // ♀
+                Gender.Unknown -> "?"       // Unknown
+            }
+
+            // Klik listener
+            itemView.setOnClickListener {
+                onClickListener.onItemClick(cat)
+            }
+        }
+    }
+
+    // 6️⃣ Inner class untuk swipe-to-delete
     inner class SwipeToDeleteCallback :
         ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-        // We don't support move (drag & drop) in this example
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean = false
 
-        // Optionally restrict swipe to only our ViewHolder type
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
         ): Int {
             return if (viewHolder is CatViewHolder) {
-                // no drag, allow left & right swipe
                 makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-            } else {
-                0
-            }
+            } else 0
         }
 
-        // Called when swipe detected — remove the item from adapter
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -68,18 +114,19 @@ class CatAdapter(
         }
     }
 
+    // 7️⃣ Adapter standard override
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatViewHolder {
         val view = layoutInflater.inflate(R.layout.item_list, parent, false)
-        return CatViewHolder(view, imageLoader, onClickListener)
+        return CatViewHolder(view)
     }
-
-    override fun getItemCount() = cats.size
 
     override fun onBindViewHolder(holder: CatViewHolder, position: Int) {
         holder.bindData(cats[position])
     }
 
-    // Listener interface for clicks (ke MainActivity)
+    override fun getItemCount(): Int = cats.size
+
+    // 8️⃣ Listener interface
     interface OnClickListener {
         fun onItemClick(cat: CatModel)
     }

@@ -1,54 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <ImageView
-        android:id="@+id/cat_photo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/material_dynamic_neutral50" />
 
-    <TextView
-        android:id="@+id/cat_name"
-        android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/cat_photo"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Cat Name" />
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/cat_breed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/cat_name"
-        app:layout_constraintTop_toBottomOf="@id/cat_name"
-        tools:text="Cat Breed" />
+        <ImageView
+            android:id="@+id/cat_photo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="cat photo"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/cat_biography"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/cat_breed"
-        app:layout_constraintTop_toBottomOf="@id/cat_breed"
-        tools:text="Cat Biography" />
+        <TextView
+            android:id="@+id/cat_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/cat_photo"
+            app:layout_constraintTop_toTopOf="@id/cat_photo"
+            app:layout_constraintEnd_toStartOf="@id/cat_gender"
+            tools:text="Cat Name" />
 
-    <TextView
-        android:id="@+id/cat_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="♂" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/cat_breed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="@id/cat_name"
+            app:layout_constraintTop_toBottomOf="@id/cat_name"
+            app:layout_constraintEnd_toStartOf="@id/cat_gender"
+            tools:text="Cat Breed" />
+
+        <TextView
+            android:id="@+id/cat_biography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintStart_toStartOf="@id/cat_breed"
+            app:layout_constraintTop_toBottomOf="@id/cat_breed"
+            app:layout_constraintEnd_toStartOf="@id/cat_gender"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Cat Biography" />
+
+        <TextView
+            android:id="@+id/cat_gender"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="♀" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

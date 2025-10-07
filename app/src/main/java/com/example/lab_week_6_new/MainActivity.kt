@@ -11,7 +11,6 @@ import com.example.lab_week_6_new.model.CatBreed
 import com.example.lab_week_6_new.model.CatModel
 import com.example.lab_week_6_new.model.Gender
 
-
 class MainActivity : AppCompatActivity() {
 
     private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
@@ -31,38 +30,27 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = catAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        // 🔽 Tambahkan kode ini (baru)
         val itemTouchHelper = ItemTouchHelper(catAdapter.swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        // 🔽 Tetap sama seperti sebelumnya
         catAdapter.setData(
             listOf(
-                CatModel(
-                    Gender.Male,
-                    CatBreed.BalineseJavanese,
-                    "Fred",
-                    "Silent and deadly",
-                    "https://cdn2.thecatapi.com/images/7dj.jpg"
-                ),
-                CatModel(
-                    Gender.Female,
-                    CatBreed.ExoticShorthair,
-                    "Wilma",
-                    "Cuddly assassin",
-                    "https://cdn2.thecatapi.com/images/egv.jpg"
-                ),
-                CatModel(
-                    Gender.Unknown,
-                    CatBreed.AmericanCurl,
-                    "Curious George",
-                    "Award winning investigator",
-                    "https://cdn2.thecatapi.com/images/bar.jpg"
-                )
+                CatModel(Gender.Male, CatBreed.BalineseJavanese, "Fred", "Silent and deadly", "https://cdn2.thecatapi.com/images/7dj.jpg"),
+                CatModel(Gender.Female, CatBreed.ExoticShorthair, "Wilma", "Cuddly assassin", "https://cdn2.thecatapi.com/images/egv.jpg"),
+                CatModel(Gender.Unknown, CatBreed.AmericanCurl, "Curious George", "Award winning investigator", "https://cdn2.thecatapi.com/images/bar.jpg"),
+                CatModel(Gender.Male, CatBreed.MaineCoon, "Max", "Big and fluffy guardian", "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg"),
+                CatModel(Gender.Female, CatBreed.Bengal, "Luna", "Fast, fierce, and fabulous", "https://cdn2.thecatapi.com/images/O3btzLlsO.png"),
+                CatModel(Gender.Male, CatBreed.Sphynx, "Baldy", "Has nothing to hide", "https://cdn2.thecatapi.com/images/BDb8ZXb1v.jpg"),
+                CatModel(Gender.Female, CatBreed.Siamese, "Nala", "Queen of the couch", "https://cdn2.thecatapi.com/images/ai6Jps4sx.jpg"),
+                CatModel(Gender.Unknown, CatBreed.Abyssinian, "Shadow", "Always watching you", "https://cdn2.thecatapi.com/images/0XYvRd7oD.jpg"),
+                CatModel(Gender.Male, CatBreed.Persian, "Fluffy", "Too fabulous to care", "https://cdn2.thecatapi.com/images/9v.jpg"),
+                CatModel(Gender.Female, CatBreed.Ragdoll, "Coco", "Soft, sleepy, and sweet", "https://cdn2.thecatapi.com/images/lydL1yH7E.jpg"),
+                CatModel(Gender.Unknown, CatBreed.ScottishFold, "Mochi", "Small but curious", "https://cdn2.thecatapi.com/images/6tb.jpg"),
+                CatModel(Gender.Male, CatBreed.Birman, "Leo", "A brave heart with silky fur", "https://cdn2.thecatapi.com/images/HOrX5gwLS.jpg"),
+                CatModel(Gender.Female, CatBreed.Oriental, "Misty", "Elegant and mysterious", "https://cdn2.thecatapi.com/images/sxIXJax6h.jpg")
             )
         )
     }
-
 
     private fun showSelectionDialog(cat: CatModel) {
         AlertDialog.Builder(this)
