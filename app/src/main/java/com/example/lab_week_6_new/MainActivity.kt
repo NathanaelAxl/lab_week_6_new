@@ -5,10 +5,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.lab_week_6_new.adapter.CatAdapter
 import com.example.lab_week_6_new.model.CatBreed
 import com.example.lab_week_6_new.model.CatModel
 import com.example.lab_week_6_new.model.Gender
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = catAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+        // 🔽 Tambahkan kode ini (baru)
+        val itemTouchHelper = ItemTouchHelper(catAdapter.swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        // 🔽 Tetap sama seperti sebelumnya
         catAdapter.setData(
             listOf(
                 CatModel(
@@ -55,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
     }
+
 
     private fun showSelectionDialog(cat: CatModel) {
         AlertDialog.Builder(this)
